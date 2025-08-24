@@ -1,13 +1,10 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(title="Habit Tracker API")
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def root():
+    return {"message": "Welcome to the Habit Tracker API"}
 
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
