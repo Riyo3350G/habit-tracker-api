@@ -11,7 +11,7 @@ class UserCreate(UserBase):
 class UserLogin(BaseModel):
     username: str
     password: str
-class User(UserBase):
+class UserResponse(UserBase):
     id: int
 
     class Config:
