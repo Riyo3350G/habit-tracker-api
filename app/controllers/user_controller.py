@@ -6,7 +6,7 @@ from datetime import timedelta
 from app.models.user_model import User  # SQLAlchemy model
 from app.views.user_view import UserCreate, UserLogin, UserResponse
 from app.core.database import get_db
-from app.core.security import password_hash, verify_password, create_access_token
+from app.core.security import password_hash, verify_password, create_access_token, get_username_from_token
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -36,3 +36,8 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     access_token = create_access_token(data={"sub": db_user.username}, expires_delta=access_token_expires)
 
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get("/me", response_model=UserResponse)
+def read_users_me(current_user: User = Depends(get_username_from_token)):
+    "Get current logged-in user"
+    return current_user
